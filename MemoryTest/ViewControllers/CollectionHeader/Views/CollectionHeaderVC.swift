@@ -50,7 +50,8 @@ extension CollectionHeaderVC: UICollectionViewDelegate, UICollectionViewDataSour
         let index = indexPath.item
         let item = items[index]
         
-        cell.thumbImageView.sd_setImage(with: item.toURL)
+//        cell.thumbImageView.sd_setImage(with: item.toURL)
+        cell.thumbImageView.kf.setImage(with: item.toURL, placeholder: nil, options: [.loadDiskFileSynchronously])
         
         return cell
     }
@@ -64,6 +65,14 @@ extension CollectionHeaderVC: UICollectionViewDelegate, UICollectionViewDataSour
                 for: indexPath) as! CommonCollectionHeaderView
             
             print("💙 create header")
+            view.completion = { [weak self] in
+                guard let strongSelf = self else { return }
+                
+                strongSelf.items += strongSelf.items
+                strongSelf.collectionView.reloadData()
+                print("💙 새로고침")
+            }
+            view.setBindings()
             
             return view
         }
@@ -79,6 +88,10 @@ extension CollectionHeaderVC: UICollectionViewDelegate, UICollectionViewDataSour
         let indexPath = IndexPath(row: 0, section: section)
         let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath) as! CommonCollectionHeaderView
         
-        return headerView.systemLayoutSizeFitting(CGSize(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height),withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+        return headerView.systemLayoutSizeFitting(
+            CGSize(width: collectionView.frame.width,
+                   height: UIView.layoutFittingExpandedSize.height),
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel)
     }
 }

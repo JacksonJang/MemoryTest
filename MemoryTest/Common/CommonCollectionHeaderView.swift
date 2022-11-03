@@ -10,9 +10,13 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import Then
+import RxGesture
 
 class CommonCollectionHeaderView: UICollectionReusableView {
     static let identifier = "CommonCollectionHeaderView"
+    
+    var disposeBag = DisposeBag()
+    var completion:(()->Void)? = nil
     
     let stackView = UIStackView().then{
         $0.axis = .vertical
@@ -34,6 +38,12 @@ class CommonCollectionHeaderView: UICollectionReusableView {
         }
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        disposeBag = DisposeBag()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -53,6 +63,16 @@ class CommonCollectionHeaderView: UICollectionReusableView {
         stackView.snp.makeConstraints{
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
+    }
+    
+    public func setBindings() {
+        view.rx.tapGesture().skip(1)
+            .observe(on: MainScheduler.instance)
+            .bind { [weak self] _ in
+                guard let strongSelf = self else { return }
+                
+                strongSelf.completion?()
+            }.disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {
