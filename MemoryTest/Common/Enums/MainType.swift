@@ -10,4 +10,6 @@ import Foundation
 enum MainType:String {
     case uivewInUICollectionView = "SecondVC"
     case onlyUIColelctionView = "ThirdVC"
+    case tableView = "UITableViewVC"
+    case collectionViewHeader = "CollectionHeaderVC"
 }

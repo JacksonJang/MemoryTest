@@ -16,12 +16,13 @@ import Then
  */
 
 class SecondVC: BaseVC {
-    var viewModel = SecondVCModel()
+    var viewModel:SecondVCModel? = SecondVCModel()
     
-    let listView = MemoryViewListView()
+    var listView:MemoryViewListView? = MemoryViewListView()
     
     deinit {
         print("💙 SecondVC deinit")
+        listView = nil
     }
     
     override func viewDidLoad() {
@@ -30,27 +31,27 @@ class SecondVC: BaseVC {
         setupUI()
         setBindings()
         
-        self.viewModel.createImageDatas()
+        self.viewModel?.createImageDatas()
     }
     
     public func configuration(items:[String]) {
-        listView.configuration(items: items)
+        listView!.configuration(items: items)
     }
     
     private func setupUI() {
-        self.view.addSubview(listView)
+        self.view.addSubview(listView!)
         
         setupConstraints()
     }
     
     private func setupConstraints() {
-        listView.snp.makeConstraints{
+        listView!.snp.makeConstraints{
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
     }
     
     private func setBindings() {
-        viewModel.items.observe(on: MainScheduler.instance)
+        viewModel?.items.observe(on: MainScheduler.instance)
             .bind{ [weak self] items in
                 guard let strongSelf = self else { return }
                 guard let items = items else { return }

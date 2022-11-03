@@ -83,6 +83,14 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
                 print("💙 오직 UICollectionView 만 선택")
                 let vc = ThirdVC()
                 self.push(vc)
+            case MainType.tableView.rawValue:
+                print("💙 오직 tableView 만 선택")
+                let vc = UITableViewVC()
+                self.push(vc)
+            case MainType.collectionViewHeader.rawValue:
+                print("💙 collectionViewHeader 선택")
+                let vc = CollectionHeaderVC()
+                self.push(vc)
             default:
                 print("💙 기타 선택")
             }

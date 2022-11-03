@@ -18,8 +18,10 @@ class MainViewModel {
 //MARK: - Set Data
 extension MainViewModel {
     func getData() {
-        let list = [MainItem(title: "UIView 안에 UICollectionView", value: "SecondVC"),
-                    MainItem(title: "UICollectionView 설정", value: "ThirdVC")
+        let list = [MainItem(title: "UIView 안에 UICollectionView(Second)", value: "SecondVC"),
+                    MainItem(title: "UICollectionView 설정(Third)", value: "ThirdVC"),
+                    MainItem(title: "UITableView 테스트", value: "UITableViewVC"),
+                    MainItem(title: "CollectionHeaderVC 테스트", value: "CollectionHeaderVC")
                     ]
         items.accept(list)
     }

@@ -1,8 +1,8 @@
 //
-//  MemoryViewListViewCell.swift
+//  CommonCollectionViewCell.swift
 //  MemoryTest
 //
-//  Created by 장효원 on 2022/11/01.
+//  Created by 장효원 on 2022/11/03.
 //
 
 import UIKit
@@ -11,16 +11,10 @@ import RxCocoa
 import SnapKit
 import Then
 
-class MemoryViewListViewCell: BaseCollectionViewCell {
-    static let identifier = "MemoryViewListViewCell"
+class CommonCollectionViewCell: BaseCollectionViewCell {
+    static let identifier = "CommonCollectionViewCell"
     
     let thumbImageView = UIImageView()
-    
-    deinit {
-        print("💙 MemoryViewListViewCell deinit")
-        self.thumbImageView.image = nil
-        self.removeFromSuperview()
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,16 +22,8 @@ class MemoryViewListViewCell: BaseCollectionViewCell {
         setupUI()
     }
     
-    public func configuration() {
-        
-    }
-    
     private func setupUI() {
-        [
-            thumbImageView
-        ].forEach{
-            self.contentView.addSubview($0)
-        }
+        contentView.addSubview(thumbImageView)
         
         setupConstraints()
     }
